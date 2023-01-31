@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+{% macro rendering(element, strFront = '', strBack = '') -%}
+  \[ {{ strFront }} \begin{bmatrix} {{ element.__repr__() }} \end{bmatrix} {{ strBack }} \]
+{%- endmacro %}
+
+</body>
+</html>

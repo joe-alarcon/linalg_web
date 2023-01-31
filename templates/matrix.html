@@ -1,0 +1,133 @@
+{% extends "index.html" %}
+{% from 'macros.html' import rendering %}
+
+{% block content %}
+
+<div class="result_table">
+    <table>
+        <tr>
+            <th> <h1>Matrix</h1> </th>
+            <td> {{ rendering(matrix) }} </td>
+        </tr>
+        <tr>
+            <th> <h2>Matrix properties</h2> </th>
+            <td>
+                <ul>
+                    <li>Augmented: {{matrix.augm}}</li>
+                    <li>Symmetric: {{matrix.symmetric}}</li>
+                    <li>Consistent: {{ matrix.cons }} </li>
+                    <li>Linearly Independent columns: {{ matrix.cols_indep }}</li>
+                    <li>Orthogonal columns: {{ matrix.orth_cols }}</li>
+                    <li>Orthonormal columns: {{ matrix.orthogonal }}</li>
+                    <li>Invertible: {{ matrix.invertible }}</li>
+                    <li>Rank: {{ matrix.rank }} and Nullity: {{ matrix.nullity }}</li>
+                    <li>Determinant: {{ matrix.det }}</li>
+                    {% if matrix.symmetric %}
+                    <li>Orthogonally Diagonalizable: {{ matrix.orthogonally_diagonalizable }}</li>
+                    {% else %}
+                    <li>Diagonalizable: {{ matrix.diagonalizable }}</li>
+                    {% endif %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th> <h3>Reduced Form</h3> </th>
+            <td> {{ rendering(matrix.reduced_matrix) }} </td>
+        </tr>
+        {% if matrix.augm %}
+        <tr>
+            {% if not matrix.cons %}
+            <th> <h3>Least Squares Solution</h3> </th>
+            <td>
+                {% if (matrix.w - matrix.num_pivots - 1) > 0 %}
+                    \[
+                    {% for vec in matrix.solution[0] %}
+                        \begin{bmatrix} {{ vec[0].__repr__() }} \end{bmatrix}{{vec[1]}} +
+                    {% endfor %}
+                    \]
+                {% else %}
+                    {{ redering(matrix.solution[0][0]) }}
+                {% endif %}
+            </td>
+            {% else %}
+            <th> <h3>Solution</h3> </th>
+            <td>
+                {% if (matrix.w - matrix.num_pivots - 1) > 0 %}
+                    \[
+                    {% for vec in matrix.solution %}
+                        \begin{bmatrix} {{ vec[0].__repr__() }} \end{bmatrix}{{vec[1]}} +
+                    {% endfor %}
+                    \]
+                {% else %}
+                    {{ rendering(matrix.solution[0]) }}
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% endif %}
+        {% if matrix.is_square %}
+        <tr>
+            <th> <h3>Schur Decomposition</h3> </th>
+            <td>
+                <table id="schur">
+                    <tr>
+                        <th> U Matrix (transformation) </th>
+                        <th> T matrix (upper triangular) </th>
+                    </tr>
+                    <tr>
+                        <td> {{ rendering(matrix.upper_triangular_form[0]) }} </td>
+                        <td> {{ rendering(matrix.upper_triangular_form[1]) }} </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        {% endif %}
+        {% if matrix.eigenvectors %}
+        <tr>
+            <th> <h3>Eigenspaces</h3> </th>
+            <td>
+                <table id="eigen">
+                    <tr>
+                        {% for tuple_set in matrix.eigenvectors %}
+                        <th>
+                            Eigenspace {{ clean(tuple_set[0], True) }}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for tuple_set in matrix.eigenvectors %}
+                        <td>
+                            {% for eigenvector in tuple_set[1] %}
+                                \( \begin{bmatrix} {{ eigenvector.__repr__() }} \end{bmatrix} \)
+                            {% endfor %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        {% endif %}
+        {% if matrix.diagonalizable %}
+        <tr>
+            <th> <h3>Diagonalization</h3> </th>
+            <td>
+                {{ rendering(matrix.get_diag_exp(0), 'P = ') }}
+                {{ rendering(matrix.get_diag_exp(1), 'D = ') }}
+                {{ rendering(matrix.get_diag_exp(2), 'P^{-1} = ') }}
+            </td>
+        </tr>
+        {% endif %}
+        {% if matrix.svd_exp %}
+        <tr>
+            <th> <h3>SVD</h3> </th>
+            <td>
+                {{ rendering(matrix.get_svd_exp(0), 'U = ') }}
+                {{ rendering(matrix.get_svd_exp(1), '\Sigma = ') }}
+                {{ rendering(matrix.get_svd_exp(2), 'V^T = ') }}
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

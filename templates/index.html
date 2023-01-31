@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Matrix</title>
+    <link rel="stylesheet" type="text/css" href="/static/styling.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<div class='header'>
+    <button onclick="location.href = '{{ url_for('make_new') }}';" id="create_new">Create New Matrix</button>
+    <button onclick="location.href = '{{ url_for('calculator') }}';" id="calculator">Calculator</button>
+    <h1>Matrix Solver and Calculator</h1>
+    <div class="dropdown-menu">
+        <button class="drop-button">Object Menu</button>
+        <div class="dropdown-content">
+            <ul id="dropdown-content-list">
+                {% if empty %}
+                    <li>No objects created yet</li>
+                {% else %}
+                    {% for i in m_list %}
+                        <li> <a href="/matrix{{ loop.index0 }}"> Matrix {{ loop.index0 }} </a> </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <button id="clear-btn">Clear Memory (double click)</button>
+</div>
+
+{% block content %}{% endblock %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<h4>Flash messages</h4>
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<script src="{{url_for('static', filename='dropdown_handler.js')}}"></script>
+</body>
+</html>

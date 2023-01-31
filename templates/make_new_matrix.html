@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class='size-input'>
+  <table id='class-table'>
+    <tr>
+      <th> Rows </th>
+      <th> Columns </th>
+    </tr>
+    <tr>
+      <td> <input type="number" id="rows"> </td>
+      <td> <input type="number" id="cols"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class='size-input2'>
+  <label> Augmented Matrix? </label>
+  <input type="checkbox" id="aug">
+</div>
+
+<div class='size-input3'>
+  <button id="size-btn">Submit Size</button>
+</div>
+
+<div class='m-input'>
+  <table id="table">
+  </table>
+</div>
+
+<div class="m-input2">
+  <button id="submit-m">Submit Input</button>
+</div>
+
+<!--
+<h3>Flash</h3>
+<ul id="flash">
+
+</ul> -->
+
+<script src="{{url_for('static', filename='user_input_handler.js')}}"></script>
+{% endblock %}

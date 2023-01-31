@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Matrix</title>
+    <link rel="stylesheet" type="text/css" href="/static/styling_home.css">
+</head>
+<body>
+
+<div class='header'>
+    <h1>Matrix Solver and Calculator</h1>
+</div>
+
+<div class="home-container">
+    <span>
+        <button onclick="location.href = '{{ url_for('make_new') }}';" id="create_new">Create New Matrix</button>
+    </span>
+    <span>
+        <button onclick="location.href = '{{ url_for('calculator') }}';" id="calculator">Calculator</button>
+    </span>
+    <span>
+        <button id="clear-btn">Clear Memory (double click)</button>
+    </span>
+</div>
+
+<div class="list-container">
+    <ul id="dropdown-content-list-body">
+        <li>No objects created yet</li>
+    </ul>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<h4>Flash messages</h4>
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<script src="{{url_for('static', filename='home_handler.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% from 'macros.html' import rendering %}
+
+{% block content %}
+<div class="calculator-container">
+    <table id="dropdown-content-list-calculator">
+        {% if not matrices %}
+        <tr> <th> No objects created yet </th> </tr>
+        {% else %}
+            <tr>
+                {% for matrix in matrices %}
+                <th> <a href="/matrix{{ loop.index0 }}"> Matrix {{ loop.index0 }} </a> </th>
+                {% endfor %}
+            </tr>
+            <tr>
+            {% for matrix in matrices %}
+                <td> {{ rendering(matrix) }} </td>
+            {% endfor %}
+            </tr>
+        {% endif %}
+    </table>
+</div>
+
+<div class="calc_in">
+    <form action="/calculator" method='post'>
+        {{ in_form.hidden_tag() }}
+        {{ in_form.text_in_field.label }}
+        {{ in_form.text_in_field() }}
+        {{ in_form.submitButton() }}
+    </form>
+</div>
+
+
+{% endblock %}
