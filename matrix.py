@@ -1197,8 +1197,8 @@ class Matrix:
         count = 0
         curr = self.eigenvectors[count]
         while isinstance(curr[0], complex) and count < len(self.eigenvectors):
-            count += 1
             curr = self.eigenvectors[count]
+            count += 1
         eigenvalue = curr[0]
         eigenvector = curr[1][0].copy().normalise()
         # Extend basis using gram schmidt

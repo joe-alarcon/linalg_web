@@ -97,7 +97,7 @@ def calculator():
         for i in range(len(list_separated_input_string)):
             s = list_separated_input_string[i]
             if disallowed_terms(s):
-                flash('Invalid inputs')
+                flash('Invalid inputs: disallowed.')
                 return redirect(url_for('calculator'))
 
             num = check_which_matrix(s)
@@ -114,7 +114,7 @@ def calculator():
             result = eval(parsed_string)
         #exec(parsed_string, {"transpose": Matrix.transpose, "inverse": Matrix.invert, "matrix_array": matrix_array})
         except SyntaxError or NameError:
-            flash("Invalid Inputs")
+            flash("Invalid Inputs: error.")
             return redirect(url_for('calculator'))
 
         if result is not None:
